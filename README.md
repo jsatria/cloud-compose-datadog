@@ -18,7 +18,7 @@ And the following command to delete the monitors:
 cloud-compose datadog monitors down
 ```
 
-###Datadog API
+### Datadog API
 This plugin uses the Datadog native API in order to create monitors, and thus requires the following environment variables:
 
 1. DATADOG_API_KEY
@@ -26,10 +26,10 @@ This plugin uses the Datadog native API in order to create monitors, and thus re
 
 If you are using multiple Datadog accounts or want to be able to share those secrets easily, it is convenient to use [Envdir](https://pypi.python.org/pypi/envdir) to run the plugin
 
-##Configuration
+## Configuration
 To understand the purpose of each part of the configuration file consider the following example with an explanation of each elelment:
 
-###cloud-compose.yml
+### cloud-compose.yml
 ```yaml
 datadog:
   name: ${CLUSTER_NAME}
@@ -55,34 +55,34 @@ datadog:
       query: 'min(last_2h):min:mongodb.backups.missing{clustername:%(name)s} > 0'
 ```
 
-####name
+#### name
 The ``name`` is the unique name of the cluster you will be creating the monitor on
 
-####use_cluster_prefix (optional)
+#### use_cluster_prefix (optional)
 ``use_cluster_prefix`` is a flag that, when enabled, will create monitors with the name format ``[${CLUSTER_NAME}] ${monitor_name}``. Defaults to true
 
-####notify
+#### notify
 A list of the people or channels you wish to ``notify`` when the monitor triggers an alert. Each element in the list will be appended to the end of each monitor's message for Datadog to use
 
-####options (optional)*
+#### options (optional)*
 Set the default ``options`` for each monitor that you want to create. Possible options can be found on the [Datadog API](http://docs.datadoghq.com/api/#monitors)
 
-####monitors
+#### monitors
 The list of Datadog ``monitors`` you want to create
 
-#####tag
+##### tag
 The unique ``tag`` to attach to the monitor
 
-####message
+#### message
 The ``message`` to be sent out to those specified when the monitor triggers an alert
 
-####name
+#### name
 The ``name`` of the monitor to be created
 
-####query
+#### query
 The ``query`` you want the monitor to listen to. In order to avoid conflicts with Datadog's own handlebars templating, the query string will be preformatted using Python 2's format string of the form ``%({{var}})s``, where {{var}} is defined under ``datadog`` in the yaml. For example, ``%(name)s`` will be replaced by ``${CLUSTER_NAME}``
 
-####options (optional)*
+#### options (optional)*
 Set the ``options`` for the individual monitor. Will be merged with the default options you have defined, but the individual monitor options will take precendence
 
 
